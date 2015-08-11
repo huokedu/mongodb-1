@@ -18,7 +18,7 @@ Module                | S | Information
 ----------------------|---|----------------------------------------------------
 mongodb               | * | Support library for the other modules.
 mongodb_block         |   | Store block information in MongoDB. Very close to the core block API.
-mongodb_cache         |   | Store cache in MongoDB.
+mongodb_cache         | * | Store cache in MongoDB.
 mongodb_field_storage |   | Store fields in MongoDB.
 mongodb_path          | * | Store URL aliases in MongoDB.
 mongodb_queue         |   | DrupalQueueInterface implementation using MongoDB.

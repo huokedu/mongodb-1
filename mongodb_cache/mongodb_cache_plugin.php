@@ -47,6 +47,7 @@ class Cache implements \DrupalCacheInterface {
    * @var bool
    *
    * @see \Drupal\mongodb_cache\Cache::notifyException()
+   * @see \Drupal\mongodb_cache\Cache::hasException()
    *
    * This is a static, because the plugin assumes that connection errors will be
    * share between all bins, under the hypothesis that all bins will be using
@@ -417,6 +418,18 @@ class Cache implements \DrupalCacheInterface {
         $this->attemptRemove($criteria);
       }
     }
+  }
+
+  /**
+   * Has the plugin thrown an exception at any point ?
+   *
+   * @retun bool
+   *   Has it ?
+   *
+   * @see mongodb_cache_exit()
+   */
+  public static function hasException() {
+    return static::$isExceptionNotified;
   }
 
   /**

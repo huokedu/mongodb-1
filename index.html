@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>MongoDB for Drupal</title>
+  
+
+  <link rel="shortcut icon" href="./img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="./css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "None";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = "/";
+  </script>
+  
+  <script src="./js/jquery-2.1.1.min.js"></script>
+  <script src="./js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="./js/highlight.pack.js"></script>
+  <script src="./js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> MongoDB for Drupal</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href=".">Home</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#mongodb-suite-for-drupal-8">MongoDB suite for Drupal 8</a></li>
+                
+                    <li><a class="toctree-l4" href="#modules">Modules</a></li>
+                
+                    <li><a class="toctree-l4" href="#project-layout">Project layout</a></li>
+                
+                    <li><a class="toctree-l4" href="#legal-information">Legal information</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Modules</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="modules/mongodb/">Driver: mongodb</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="modules/mongodb_watchdog/">Logger: mongodb_watchdog</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Development</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="bespoke/">Bespoke code</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="tests/">Tests</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">MongoDB for Drupal</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/FGM/mongodb" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="mongodb-suite-for-drupal-8">MongoDB suite for Drupal 8</h1>
+<p>The MongoDB&reg; suite for Drupal&reg; 8 is a set of modules enabling the
+storage of various types of data on a Drupal site, in addition to, or as a
+replacement for the standard SQL storage used by Drupal.</p>
+<p>It comprises several Drupal modules, each implementing a specific functionality.
+With the exception of the base "driver" <code>mongodb</code> module, upon which all others
+depend because it provides the standardized connection service to Drupal, all
+the modules are independent of each other except where indicated.</p>
+<p>The <code>mongodb</code> module is not just the basis for this package, but also is
+designed to ease the development of bespoke code for end-user projects,
+providing Drupal-integrated Symfony services for Client and Database with a
+familiar alias-based selection, like the SQL database drivers do.</p>
+<h2 id="modules">Modules</h2>
+<h3 id="working">Working</h3>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>In a word</th>
+<th>Information</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="./mongodb">mongodb</a></td>
+<td>driver</td>
+<td>MongoDB Client and Database services, <a href="./tests">tests</a> base</td>
+</tr>
+<tr>
+<td><a href="./mongodb_watchdog">mongodb_watchdog</a></td>
+<td>logger</td>
+<td>PSR-3 compliant logger with a built-in UI</td>
+</tr>
+</tbody>
+</table>
+<h3 id="not-yet-ported">Not yet ported</h3>
+<p>These modules exist for earlier Drupal versions, but have not been ported to
+Drupal 8 yet. Some of them might never be ported because they are no longer
+relevant in Drupal 8</p>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Information</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mongodb_block</code></td>
+<td>Store Drupal blocks in MongoDB</td>
+</tr>
+<tr>
+<td><code>mongodb_block_ui</code></td>
+<td>Provide a UI to manager blocks stored in MongoDB. Depends on <code>mongodb_block</code>.</td>
+</tr>
+<tr>
+<td><code>mongodb_cache</code></td>
+<td>Store cache information in MongoDB</td>
+</tr>
+<tr>
+<td><code>mongodb_field_storage</code></td>
+<td>Store entities and their fields in MongoDB</td>
+</tr>
+<tr>
+<td><code>mongodb_migrate</code></td>
+<td>Migrate SQL entities/fields to MongoDB. Depends on <code>mongodb_field_storage</code>.</td>
+</tr>
+<tr>
+<td><code>mongodb_queue</code></td>
+<td>Implement a MongoDB backend for Queue API</td>
+</tr>
+<tr>
+<td><code>mongodb_session</code></td>
+<td>Store session information in MongoDB</td>
+</tr>
+</tbody>
+</table>
+<h3 id="planned">Planned</h3>
+<p>These modules have no direct equivalent in earlier versions, but their
+development is being considered.</p>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Information</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mongodb_debug</code></td>
+<td>Provide low-level debug information. A D7 version exists on <a href="https://github.com/FGM/mongodb_logger/">mongodb_logger</a> but depends on the legacy <code>mongo</code> PHP extension. Futures versions will need the 1.4 version of the <code>mongodb</code> extension which implements the MongoDB APM specification.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="project-layout">Project layout</h2>
+<pre><code>mkdocs.yml    # The configuration file.
+docs/
+    index.md  # The documentation homepage.
+    ...       # Other markdown pages, images and other files.
+</code></pre>
+<h2 id="legal-information">Legal information</h2>
+<ul>
+<li>This suite of modules is licensed under the General Public License, version 2 or later (GPL-2.0+).</li>
+<li>MongoDB is a registered trademark of MongoDB Inc.</li>
+<li>Drupal is a registered trademark of Dries Buytaert.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="modules/mongodb/" class="btn btn-neutral float-right" title="Driver: mongodb">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/FGM/mongodb" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+        <span style="margin-left: 15px"><a href="modules/mongodb/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 0.15.3
+Build Date UTC : 2016-07-09 10:00:47.763137
+-->

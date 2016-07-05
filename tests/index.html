@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Tests - MongoDB for Drupal</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Tests";
+    var mkdocs_page_input_path = "tests.md";
+    var mkdocs_page_url = "/tests/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> MongoDB for Drupal</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Modules</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../modules/mongodb/">Driver: mongodb</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../modules/mongodb_watchdog/">Logger: mongodb_watchdog</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Development</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../bespoke/">Bespoke code</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Tests</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#phpunit">PHPUnit</a></li>
+                
+                    <li><a class="toctree-l4" href="#writing-your-own-tests">Writing your own tests</a></li>
+                
+                    <li><a class="toctree-l4" href="#running-tests">Running tests</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">MongoDB for Drupal</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Development &raquo;</li>
+        
+      
+    
+    <li>Tests</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/FGM/mongodb" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>The newly ported modules have some test coverage, which can be checked with
+PHPUnit.</p>
+<h1 id="phpunit">PHPUnit</h1>
+<h2 id="writing-your-own-tests">Writing your own tests</h2>
+<p>The <code>mongodb</code> module provides a <code>Drupal\mongodb\Tests\MongoDbTestBase</code> base
+class on which you can build your custom kernel tests for <a href="../bespoke">bespoke</a> modules, as
+it provides a per-test database created during test <code>setUp()</code>, and
+dropped during <code>tearDown()</code>.</p>
+<h2 id="running-tests">Running tests</h2>
+<p>With the Simpletest UI apparently going away in Drupal 8.2 (cf <a href="https://www.drupal.org/node/2566767">#2566767</a>,
+<a href="https://www.drupal.org/node/2750461">#2750461</a>), tests should be run from the command line.</p>
+<h3 id="running-directly">Running directly</h3>
+<p>The typical full command to run tests looks like this ('\' is to avoid too long a line):</p>
+<pre><code>MONGODB_URI=mongodb://somemongohost:27017 \
+SIMPLETEST_DB=mysql://someuser:somepassword@localhost/somedatabase \
+phpunit -c core/phpunit.xml.dist
+</code></pre>
+<ul>
+<li>Optional: <code>MONGODB_URI</code> points to a working MongoDB instance. This variable is optional:
+  if it is not provided, the tests will default to <code>mongodb://localhost:27017</code>.</li>
+<li>Required: <code>SIMPLETEST_DB</code> is the standard Drupal 8 variable needed to run tests that
+  can need the database service.</li>
+</ul>
+<p>Both variables can be set in the <code>core/phpunit.xml</code> custom configuration file.</p>
+<h3 id="using-a-phpunitxml-configuration-file">Using a <code>phpunit.xml</code> configuration file</h3>
+<p>The test command can also be simplified using a <code>phpunit.xml</code> configuration file:</p>
+<pre><code>phpunit -c core/phpunit.xml
+</code></pre>
+<ul>
+<li><code>core/phpunit.xml</code> is a local copy of the default <code>core/phpunit.xml.dist</code>
+  configuration file, tweaked to only test the minimum set of files needed by
+  the test suite.</li>
+<li>It can look like this, to obtain a coverage report not including the whole
+  Drupal tree, but just the MongoDB package itself:<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;phpunit ...snip...&gt;
+  &lt;php&gt;
+    &lt;env name="SIMPLETEST_DB" value="mysql://someuser:somepass@somesqlhost/somedb"/&gt;
+    &lt;env name="MONGODB_URI" value="mongodb://somemongohost:27017" /&gt;
+  &lt;/php&gt;
+  &lt;testsuites ...snip...&gt;...snip...&lt;/testsuites&gt;
+  &lt;listeners&gt;...snip...&lt;/listener&gt;
+  &lt;/listeners&gt;
+  &lt;filter&gt;
+    &lt;whitelist&gt;
+      &lt;directory&gt;../modules/contrib/mongodb&lt;/directory&gt;
+      &lt;exclude&gt;
+        &lt;directory&gt;../modules/contrib/mongodb/modules/mongodb/src/Tests&lt;/directory&gt;
+        &lt;directory suffix="Test.php"&gt;./&lt;/directory&gt;
+        &lt;directory suffix="TestBase.php"&gt;./&lt;/directory&gt;
+      &lt;/exclude&gt;
+     &lt;/whitelist&gt;
+  &lt;/filter&gt;
+&lt;/phpunit&gt;
+</code></pre>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../bespoke/" class="btn btn-neutral" title="Bespoke code"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/FGM/mongodb" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../bespoke/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+
+</body>
+</html>

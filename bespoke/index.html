@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Bespoke code - MongoDB for Drupal</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Bespoke code";
+    var mkdocs_page_input_path = "bespoke.md";
+    var mkdocs_page_url = "/bespoke/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> MongoDB for Drupal</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Modules</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../modules/mongodb/">Driver: mongodb</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../modules/mongodb_watchdog/">Logger: mongodb_watchdog</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Development</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Bespoke code</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#bespoke-code">Bespoke code</a></li>
+                
+                    <li><a class="toctree-l4" href="#example">Example</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../tests/">Tests</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">MongoDB for Drupal</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Development &raquo;</li>
+        
+      
+    
+    <li>Bespoke code</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/FGM/mongodb" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="bespoke-code">Bespoke code</h1>
+<p>Beyond the simple use cases covered by this standard package, most uses of
+MongoDB in Drupal projects appear in enteprise-class bespoke developments. Until
+this version, this usually meant totally custom code, built either straight from
+the legacy <code>mongo</code> extension, or on top of the Doctrine ODM for MongoDB,
+suffering from a total lack of integration with the underlying core Drupal SMS.</p>
+<p>Starting with 8.x-2.0, such one-off code can be developed on top of the base
+<code>mongodb</code> module: unlike our earlier releases, this one uses the normal
+connection methods and options, without deviation, adding only a thin layer of
+Drupal adaptation on top of the standard <code>mongodb</code> <a href="http://php.net/mongodb">extension</a> and
+<a href="http://mongodb.github.io/mongo-php-library/">PHP library</a>.</p>
+<h2 id="example">Example</h2>
+<p>The familiar Drupal alias mechanism for databases is available to provide easy,
+string-referenced access to Client instances from the ClientFactory service
+provided by the module:</p>
+<p>Most such code is likely to be service based, so here is an example of a service
+<code>bar</code> in module <code>foo</code>, using a custom <code>foo-database</code> aliased as <code>foodb</code>, to keep
+its storage separate from the main database used by the package modules, and its
+logic independent of other Drupal modules.</p>
+<h3 id="per-environment-settings">Per-environment settings</h3>
+<p>The site local settings file includes the alias definition, binding it to the
+actual database credentials, allowing for per-environment configuration:</p>
+<pre><code>&lt;?php
+// settings.local.php
+$settings['mongodb'] = [
+  'clients' =&gt; [
+    // Client alias =&gt; constructor parameters.
+    'default' =&gt; [
+      'uri' =&gt; 'mongodb://localhost:27017',
+      'uriOptions' =&gt; [],
+      'driverOptions' =&gt; [],
+    ],
+  ],
+  'databases' =&gt; [
+    // Collection alias =&gt; [ client_alias, collection_name ]
+    'default' =&gt; ['default', 'drupal'],
+    'logger' =&gt; ['default', 'logger'],
+    'foodb' =&gt; ['default', 'foo-database'],
+  ],
+];
+</code></pre>
+<p>With such a configuration, the <code>foodb</code> alias is available to all modules in the
+site, possibly pointing to different databases depending on the environment
+(development, staging, production...).</p>
+<h3 id="service-based-module-adapter">Service-based module adapter</h3>
+<p>The <code>foo.services.yml</code> service file for the bespoke <code>foo.module</code> can then
+reference <code>foodb</code> to access the database with a constant alias, regardless
+of the environment:</p>
+<pre><code>// modules/custom/Foo/foo.services.yml
+services:
+    foo.storage:
+      class: 'MongoDB\Database'
+      factory: ['@mongodb.database_factory', 'get']
+      arguments: ['foodb']
+
+    foo.bar:
+      class: 'Drupal\foo\Bar'
+      arguments: ['@foo.storage', '$logger.channel.foo']
+</code></pre>
+<p>This allows services in the module to access the database in both function code
+for Drupal hooks, and OO code for component-level logic - either present within the
+module itself or brought in from a Composer component - without having to be
+environment-aware.</p>
+<p>If the <code>mongodb_watchdog</code> module is enabled, the logger passed to the
+application will be a standard PSR-3 logger writing to MongoDB without the
+application having to know anything about it, but still providing a standard
+Drupal UI to examine the application logs.</p>
+<h3 id="component-logic">Component logic</h3>
+<p>Finally the component application logic can use the services without receiving
+any Drupal-specific dependency. In this example, we can simply assume the
+service code is located within the module itself, for simplicity:</p>
+<pre><code>&lt;?php
+// modules/custom/Foo/src/Bar.php
+use MongoDb\Database;
+use Psr\Log\LoggerInterface;
+
+public function __construct(Database $database, LoggerInterface $logger) {
+  $this-&gt;database = $database;
+  $this-&gt;logger = $logger;
+}
+
+public function baz() {
+  // Perform some business logic using $this-&gt;database.
+  // Log it using $this-&gt;logger.
+}
+</code></pre>
+<p>Having the code only receive standard services (like a PSR-3 logger) or
+<a href="http://mongodb.github.io/mongo-php-library/">PHP library</a> classes allows it to be written as an agnostic component,
+shareable with non-Drupal code. This is often useful in bespoke projects, which
+tend to combine Drupal with other parts of the application written in Symfony
+standard edition, since the code has no Drupal-specific dependency.</p>
+<h3 id="tests">Tests</h3>
+<p>The <code>mongodb</code> module provides a <code>MongoDbTestBase</code> base test class allowing
+kernel-based integration tests, as described on the <a href="../tests">tests</a> page.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../tests/" class="btn btn-neutral float-right" title="Tests">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../modules/mongodb_watchdog/" class="btn btn-neutral" title="Logger: mongodb_watchdog"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/FGM/mongodb" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../modules/mongodb_watchdog/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../tests/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

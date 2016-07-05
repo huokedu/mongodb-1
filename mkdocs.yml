@@ -1,0 +1,9 @@
+site_name: MongoDB for Drupal
+pages:
+  - Home: 'index.md'
+  - Modules:
+    - 'Driver: mongodb': 'modules/mongodb.md'
+    - 'Logger: `mongodb_watchdog`': 'modules/mongodb_watchdog.md'
+theme: readthedocs
+repo_url: https://github.com/FGM/mongodb
+

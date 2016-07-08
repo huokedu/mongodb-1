@@ -1,8 +1,8 @@
-# MongoDB&reg; suite for Drupal&reg;
+# MongoDB suite for Drupal 8
 
-The MongoDB suite for Drupal 8 is a set of modules enabling the storage of
-various types of data on a Drupal site, in addition to, or as a replacement for
-the standard SQL storage used by Drupal.
+The MongoDB&reg; suite for Drupal&reg; 8 is a set of modules enabling the
+storage of various types of data on a Drupal site, in addition to, or as a
+replacement for the standard SQL storage used by Drupal.
 
 It comprises several Drupal modules, each implementing a specific functionality.
 With the exception of the base `mongodb` module, upon which all others depend

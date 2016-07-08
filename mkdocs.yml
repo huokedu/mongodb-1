@@ -3,7 +3,9 @@ pages:
   - Home: 'index.md'
   - Modules:
     - 'Driver: mongodb': 'modules/mongodb.md'
-    - 'Logger: `mongodb_watchdog`': 'modules/mongodb_watchdog.md'
+    - 'Logger: mongodb_watchdog': 'modules/mongodb_watchdog.md'
+  - Development:
+    - 'Tests': 'tests.md'
 theme: readthedocs
 repo_url: https://github.com/FGM/mongodb
 

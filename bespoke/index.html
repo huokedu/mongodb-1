@@ -159,16 +159,16 @@
 MongoDB in Drupal projects appear in enteprise-class bespoke developments. Until
 this version, this usually meant totally custom code, built either straight from
 the legacy <code>mongo</code> extension, or on top of the Doctrine ODM for MongoDB,
-suffering from a total lack of integration with the underlying core Drupal SMS.</p>
+suffering from a total lack of integration with the underlying core Drupal CMS.</p>
 <p>Starting with 8.x-2.0, such one-off code can be developed on top of the base
-<code>mongodb</code> module: unlike our earlier releases, this one uses the normal
+<code>mongodb</code> module: unlike earlier releases, 8.x-2.x uses the PHP-standard
 connection methods and options, without deviation, adding only a thin layer of
 Drupal adaptation on top of the standard <code>mongodb</code> <a href="http://php.net/mongodb">extension</a> and
 <a href="http://mongodb.github.io/mongo-php-library/">PHP library</a>.</p>
 <h2 id="example">Example</h2>
 <p>The familiar Drupal alias mechanism for databases is available to provide easy,
-string-referenced access to Client instances from the ClientFactory service
-provided by the module:</p>
+string-referenced access to <code>Client</code> and <code>Database</code> instances through the
+package-provided <code>ClientFactory</code> and <code>DatabaseFactory</code> services respectively.</p>
 <p>Most such code is likely to be service based, so here is an example of a service
 <code>bar</code> in module <code>foo</code>, using a custom <code>foo-database</code> aliased as <code>foodb</code>, to keep
 its storage separate from the main database used by the package modules, and its
@@ -195,9 +195,9 @@ $settings['mongodb'] = [
   ],
 ];
 </code></pre>
-<p>With such a configuration, the <code>foodb</code> alias is available to all modules in the
-site, possibly pointing to different databases depending on the environment
-(development, staging, production...).</p>
+<p>With such a configuration, the <code>foodb</code> alias is available to all MongoDB-using
+modules in the site, possibly pointing to different databases depending on the
+environment (development, staging, production...).</p>
 <h3 id="service-based-module-adapter">Service-based module adapter</h3>
 <p>The <code>foo.services.yml</code> service file for the bespoke <code>foo.module</code> can then
 reference <code>foodb</code> to access the database with a constant alias, regardless
@@ -214,8 +214,7 @@ services:
       arguments: ['@foo.storage', '$logger.channel.foo']
 </code></pre>
 <p>This allows services in the module to access the database in both function code
-for Drupal hooks, and OO code for component-level logic - either present within the
-module itself or brought in from a Composer component - without having to be
+for Drupal hooks, and OO code for component-level logic without having to be
 environment-aware.</p>
 <p>If the <code>mongodb_watchdog</code> module is enabled, the logger passed to the
 application will be a standard PSR-3 logger writing to MongoDB without the
@@ -241,10 +240,11 @@ public function baz() {
 }
 </code></pre>
 <p>Having the code only receive standard services (like a PSR-3 logger) or
-<a href="http://mongodb.github.io/mongo-php-library/">PHP library</a> classes allows it to be written as an agnostic component,
-shareable with non-Drupal code. This is often useful in bespoke projects, which
-tend to combine Drupal with other parts of the application written in Symfony
-standard edition, since the code has no Drupal-specific dependency.</p>
+<a href="http://mongodb.github.io/mongo-php-library/">PHP library</a> classes allows it to be written as an agnostic component that can
+be brought in using Composer and shared with non-Drupal code. This is often
+useful in bespoke projects, which tend to combine Drupal with other parts of the
+application written in Laravel or Symfony standard edition, since the code has
+no Drupal-specific dependency.</p>
 <h3 id="tests">Tests</h3>
 <p>The <code>mongodb</code> module provides a <code>MongoDbTestBase</code> base test class allowing
 kernel-based integration tests, as described on the <a href="../tests">tests</a> page.</p>

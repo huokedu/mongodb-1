@@ -5,6 +5,7 @@ pages:
     - 'Driver: mongodb': 'modules/mongodb.md'
     - 'Logger: mongodb_watchdog': 'modules/mongodb_watchdog.md'
   - Development:
+    - 'Bespoke code': 'bespoke.md'
     - 'Tests': 'tests.md'
 theme: readthedocs
 repo_url: https://github.com/FGM/mongodb

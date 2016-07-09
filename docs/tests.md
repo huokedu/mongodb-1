@@ -2,9 +2,27 @@ The newly ported modules have some test coverage, which can be checked with
 PHPUnit.
 
 # PHPUnit
-## Running tests directly
+## Writing custom tests
 
-The typical full command to run tests looks like this ('\' is to avoid too long a line):
+The `mongodb` module provides a `Drupal\mongodb\Tests\MongoDbTestBase` base
+class on which to build custom kernel tests for [bespoke] modules, as
+it provides a per-test database created during test <code>setUp()</code>, and
+dropped during <code>tearDown()</code>.
+
+[bespoke]: /bespoke
+
+
+## Running tests
+
+With the Simpletest UI apparently going away in Drupal 8.2 (cf [#2566767],
+[#2750461]), tests should be run from the command line.
+
+[#2566767]: https://www.drupal.org/node/2566767
+[#2750461]: https://www.drupal.org/node/2750461
+
+### Running directly
+
+The typical full command to run tests looks like this (`\` is to avoid too long a line):
 
     MONGODB_URI=mongodb://somemongohost:27017 \
     SIMPLETEST_DB=mysql://someuser:somepassword@localhost/somedatabase \
@@ -18,11 +36,15 @@ The typical full command to run tests looks like this ('\' is to avoid too long 
 Both variables can be set in the `core/phpunit.xml` custom configuration file.
 
 
-## Using a `phpunit.xml` configuration file
+### Using a `phpunit.xml` configuration file
 
 The test command can also be simplified using a `phpunit.xml` configuration file:
 
     phpunit -c core/phpunit.xml
+
+Or to generate a coverage report:
+
+    phpunit -c core/phpunit.xml --coverage-html=/some/coverage/path modules/contrib/mongodb
 
 * `core/phpunit.xml` is a local copy of the default `core/phpunit.xml.dist`
   configuration file, tweaked to only test the minimum set of files needed by

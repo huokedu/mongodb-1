@@ -24,7 +24,7 @@ The complete documentation is available on [Github pages].
 LEGAL
 =====
 
-Like any Drupal module, this package is licensed under the [General Public 
+Like any Drupal module, this package is licensed under the [General Public
 License, version 2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) or later.
 
 * Drupal is a registered trademark of Dries Buytaert.

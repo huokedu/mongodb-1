@@ -5,17 +5,26 @@ storage of various types of data on a Drupal site, in addition to, or as a
 replacement for the standard SQL storage used by Drupal.
 
 It comprises several Drupal modules, each implementing a specific functionality.
-With the exception of the base `mongodb` module, upon which all others depend
-because it provides the standardized connection service to Drupal, all the
-modules are independent of each other except where indicated.
+With the exception of the base "driver" `mongodb` module, upon which all others
+depend because it provides the standardized connection service to Drupal, all
+the modules are independent of each other except where indicated.
+
+The `mongodb` module is not just the basis for this package, but also is
+designed to ease the development of bespoke code for end-user projects,
+providing Drupal-integrated Symfony services for Client and Database with a
+familiar alias-based selection, like the SQL database drivers do.
 
 ## Modules
 ### Working
 
-Module                  | Information
-------------------------|-------------------------------------------------------
-`mongodb`               | Drupal wrapper exposing MongoDB as a Symfony service.
-`mongodb_watchdog`      | PSR-3 compliant logger storing events in MongoDB, with a built-in UI.
+Module                  | In a word | Information
+------------------------|-----------|-------------------------------------------
+[mongodb]               | driver    | MongoDB Client and Database services, [tests] base
+[mongodb_watchdog]      | logger    | PSR-3 compliant logger with a built-in UI
+
+[mongodb]: /mongodb
+[mongodb_watchdog]: /mongodb_watchdog
+[tests]: /tests
 
 ### Not yet ported
 

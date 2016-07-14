@@ -9,8 +9,68 @@ class on which to build custom kernel tests for [bespoke] modules, as
 it provides a per-test database created during test <code>setUp()</code>, and
 dropped during <code>tearDown()</code>.
 
-[bespoke]: /bespoke
+The base class is documented on the [mongodb] documentation page.
 
+
+## Complete test example
+
+This example show how to write a test using a custom `foo` database for the
+eponymous module `foo`, assuming individual tests do not drop the database
+instance themselves.
+
+    <?php
+
+    namespace Drupal\foo\Tests;
+
+    use Drupal\mongodb\Tests\MongoDbTestBase;
+
+    /**
+     * @coversDefaultClass \Drupal\foo\Foo
+     * @group foo
+     */
+    class FooTest extends MongoDbTestBase {
+      const MODULE = 'foo';
+
+      /**
+       * The test database.
+       */
+      protected $database;
+
+      /**
+       * Add a custom alias to settings and instantiate a custom database.
+       */
+      public function setUp() {
+        parent::setUp();
+        $this->settings['databases'][static::MODULE] = [
+          static::CLIENT_TEST_ALIAS,
+          $this->getTestDatabaseName(static::MODULE),
+        ];
+        $this->database = new DatabaseFactory(
+          new ClientFactory($this->settings),
+          $this->settings
+        )->get(static::MODULE);
+      }
+
+      /**
+       * Drop the custom database.
+       */
+      public function tearDown() {
+        $this->database->drop();
+        parent::tearDown();
+      }
+
+      /**
+       * @covers ::whatever
+       */
+      public function testWhatever() {
+        // ... custom test logic...
+      }
+
+    }
+
+
+[bespoke]: /bespoke
+[mongodb]: /modules/mongodb
 
 ## Running tests
 

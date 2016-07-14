@@ -170,21 +170,24 @@ database or client by a functional alias, while the specifics of accessing
 the relevant <code>mongod</code>/<code>mongos</code> and database are left to per-environment
 settings,</p>
 <ul>
-<li><code>Drupal\mongodb\DatabaseFactory</code> :</li>
-<li>This is the recommended entry point for most applications, returning a
-    <code>MongoDb\Database</code> from a simple alias string.</li>
+<li><code>Drupal\mongodb\DatabaseFactory</code> : This is the recommended entry point for
+  most applications, returning a <code>MongoDb\Database</code> from a simple alias string.<ul>
 <li><code>__construct(ClientFactory $client_factory, Settings $settings)</code>. This is
-    normally invoked by the DIC, to which the class is exposed as
-    <code>mongodb.database_factory</code>.</li>
+  normally invoked by the container, to which the class is exposed as
+  <code>mongodb.database_factory</code>.</li>
 <li><code>get(string $alias): MongoDb\Database</code>; returns a <code>Database</code> instance
-    matching the value defined in Drupal settings for <code>$alias</code>.</li>
-<li><code>Drupal\mongodb\ClientFactory</code>:</li>
-<li>This one may be needed for more complex applications, e.g. those wishing to
-    handle operations spanning connections to multiple cluster.</li>
-<li><code>__construct(Settings $settings)</code>. This is normally invoked by the DIC, to
-    which the class is exposed as <code>mongodb.client_factory</code>.</li>
+  matching the value defined in Drupal settings for <code>$alias</code>.</li>
+</ul>
+</li>
+<li><code>Drupal\mongodb\ClientFactory</code>: This one may be needed for more complex
+  applications, e.g. those wishing to handle operations spanning connections
+  to multiple MongoDB replica sets/sharded clusters.<ul>
+<li><code>__construct(Settings $settings)</code>. This is normally invoked by the
+  container, to which the class is exposed as <code>mongodb.client_factory</code>.</li>
 <li><code>get(string $alias): MongoDb\Client</code>; returns a <code>Client</code> instance matching
-    the value defined in Drupal settings for <code>$alias</code>.</li>
+  the value defined in Drupal settings for <code>$alias</code>.</li>
+</ul>
+</li>
 </ul>
 <h2 id="test-base-class">Test base class</h2>
 <p>The module provides a <code>\Drupal\mongodb\Tests\MongoDbTestBase</code> extending core

@@ -74,6 +74,10 @@
             
                 <li class="toctree-l3"><a href="#driver-mongodb">Driver: mongodb</a></li>
                 
+                    <li><a class="toctree-l4" href="#factories">Factories</a></li>
+                
+                    <li><a class="toctree-l4" href="#test-base-class">Test base class</a></li>
+                
             
             </ul>
         
@@ -153,6 +157,83 @@
             <div class="section">
               
                 <h1 id="driver-mongodb">Driver: <code>mongodb</code></h1>
+<p>The <code>mongodb</code> module is the main module in the suite, providing a thin Drupal
+adapter for the standard MongoDB PHP library, in the form of two factory
+services and a base test class.</p>
+<h2 id="factories">Factories</h2>
+<p>The basic idea of these factory services is to provide a way to create
+instances of the standard <code>Client</code> and <code>Database</code> classes from a simple alias
+string, taking all properties initialized during these creations from the
+Drupal standard <code>Settings</code> object.</p>
+<p>This allows code to be unaware of the execution environment, referring to
+database or client by a functional alias, while the specifics of accessing
+the relevant <code>mongod</code>/<code>mongos</code> and database are left to per-environment
+settings,</p>
+<ul>
+<li><code>Drupal\mongodb\DatabaseFactory</code> :</li>
+<li>This is the recommended entry point for most applications, returning a
+    <code>MongoDb\Database</code> from a simple alias string.</li>
+<li><code>__construct(ClientFactory $client_factory, Settings $settings)</code>. This is
+    normally invoked by the DIC, to which the class is exposed as
+    <code>mongodb.database_factory</code>.</li>
+<li><code>get(string $alias): MongoDb\Database</code>; returns a <code>Database</code> instance
+    matching the value defined in Drupal settings for <code>$alias</code>.</li>
+<li><code>Drupal\mongodb\ClientFactory</code>:</li>
+<li>This one may be needed for more complex applications, e.g. those wishing to
+    handle operations spanning connections to multiple cluster.</li>
+<li><code>__construct(Settings $settings)</code>. This is normally invoked by the DIC, to
+    which the class is exposed as <code>mongodb.client_factory</code>.</li>
+<li><code>get(string $alias): MongoDb\Client</code>; returns a <code>Client</code> instance matching
+    the value defined in Drupal settings for <code>$alias</code>.</li>
+</ul>
+<h2 id="test-base-class">Test base class</h2>
+<p>The module provides a <code>\Drupal\mongodb\Tests\MongoDbTestBase</code> extending core
+class <code>KernelTestBase</code>. This allows modules to define their own integration
+tests using the module services, and taking advantage of running in a per-test
+database. What it actually provides:</p>
+<ul>
+<li>Test instance properties:<ul>
+<li><code>$this-&gt;uri</code> contains a MongoDB URI suitable for connecting to a default
+client, taken from the value of the <code>MONGODB_URI</code> variable is passed in the
+environment, on the PHPUnit command line, or in the <code>phpunit.xml</code>
+configuration file, this will be its value, otherwise it will be set to the
+traditional MongoDB default instance: <code>mongodb://localhost:27017</code>.</li>
+<li><code>$this-&gt;settings</code> contains a test-specific instance of core <code>Settings</code>,
+limited to the <code>mongodb</code> settings key. The default database in these
+settings is a temporary database defined by the Simpletest prefix, allowing
+it to be used without interacting with the rest of the site, and dropped
+during test teardown.</li>
+</ul>
+</li>
+<li>Constants: in addition to the ones used by the <code>mongodb</code> tests, the base test
+  defines constants usable by child tests:<ul>
+<li><code>CLIENT_TEST_ALIAS</code> is the alias for the default MongoDB test client</li>
+<li><code>DB_DEFAULT_ALIAS</code> is the alias for the default test database</li>
+</ul>
+</li>
+<li>Modules:<ul>
+<li>The test base enabled the <code>mongodb</code> modules, since all modules using MongoDB
+are expected to depend on it.</li>
+<li>Module tests will typically want their own module enabled, so they will need
+to add to <code>static::$modules</code> instead of redefining it, to avoid losing the
+<code>mongodb</code> module.</li>
+</ul>
+</li>
+<li><code>setUp()</code> / <code>tearDown()</code>:<ul>
+<li>Tests need to invoke <code>parent::setUp()</code> near the top of their own <code>setUp()</code>,
+  to have the test base define the properties before doing their own work.</li>
+<li>Tests need to invoke <code>parent::tearDown()</code> near the end of their own
+  <code>tearDown()</code> - if any - to drop the default test database.</li>
+<li>Tests needing non-default test databases need to extend <code>$this-&gt;settings</code>
+  to add their own database alias after invoking <code>parent::setUp()</code>, and need
+  to drop that database during their own <code>tearDown()</code>. They can use
+  <code>$this-&gt;getTestDatabaseName($postfix)</code> method to build a per-test
+  database name that will not collide with the default database.</li>
+</ul>
+</li>
+</ul>
+<p>A complete example of how to write a test using that base class is given on the
+<a href="../../tests">tests</a> page.</p>
               
             </div>
           </div>

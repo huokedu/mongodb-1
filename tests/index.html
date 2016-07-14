@@ -105,6 +105,8 @@
                 
                     <li><a class="toctree-l4" href="#writing-custom-tests">Writing custom tests</a></li>
                 
+                    <li><a class="toctree-l4" href="#complete-test-example">Complete test example</a></li>
+                
                     <li><a class="toctree-l4" href="#running-tests">Running tests</a></li>
                 
             
@@ -164,6 +166,61 @@ PHPUnit.</p>
 class on which to build custom kernel tests for <a href="../bespoke">bespoke</a> modules, as
 it provides a per-test database created during test <code>setUp()</code>, and
 dropped during <code>tearDown()</code>.</p>
+<p>The base class is documented on the <a href="../modules/mongodb">mongodb</a> documentation page.</p>
+<h2 id="complete-test-example">Complete test example</h2>
+<p>This example show how to write a test using a custom <code>foo</code> database for the
+eponymous module <code>foo</code>, assuming individual tests do not drop the database
+instance themselves.</p>
+<pre><code>&lt;?php
+
+namespace Drupal\foo\Tests;
+
+use Drupal\mongodb\Tests\MongoDbTestBase;
+
+/**
+ * @coversDefaultClass \Drupal\foo\Foo
+ * @group foo
+ */
+class FooTest extends MongoDbTestBase {
+  const MODULE = 'foo';
+
+  /**
+   * The test database.
+   */
+  protected $database;
+
+  /**
+   * Add a custom alias to settings and instantiate a custom database.
+   */
+  public function setUp() {
+    parent::setUp();
+    $this-&gt;settings['databases'][static::MODULE] = [
+      static::CLIENT_TEST_ALIAS,
+      $this-&gt;getTestDatabaseName(static::MODULE),
+    ];
+    $this-&gt;database = new DatabaseFactory(
+      new ClientFactory($this-&gt;settings),
+      $this-&gt;settings
+    )-&gt;get(static::MODULE);
+  }
+
+  /**
+   * Drop the custom database.
+   */
+  public function tearDown() {
+    $this-&gt;database-&gt;drop();
+    parent::tearDown();
+  }
+
+  /**
+   * @covers ::whatever
+   */
+  public function testWhatever() {
+    // ... custom test logic...
+  }
+
+}
+</code></pre>
 <h2 id="running-tests">Running tests</h2>
 <p>With the Simpletest UI apparently going away in Drupal 8.2 (cf <a href="https://www.drupal.org/node/2566767">#2566767</a>,
 <a href="https://www.drupal.org/node/2750461">#2750461</a>), tests should be run from the command line.</p>

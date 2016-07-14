@@ -204,14 +204,14 @@ reference <code>foodb</code> to access the database with a constant alias, regar
 of the environment:</p>
 <pre><code>// modules/custom/Foo/foo.services.yml
 services:
-    foo.storage:
-      class: 'MongoDB\Database'
-      factory: ['@mongodb.database_factory', 'get']
-      arguments: ['foodb']
+  foo.storage:
+    class: 'MongoDB\Database'
+    factory: ['@mongodb.database_factory', 'get']
+    arguments: ['foodb']
 
-    foo.bar:
-      class: 'Drupal\foo\Bar'
-      arguments: ['@foo.storage', '$logger.channel.foo']
+  foo.bar:
+    class: 'Drupal\foo\Bar'
+    arguments: ['@foo.storage', '$logger.channel.foo']
 </code></pre>
 <p>This allows services in the module to access the database in both function code
 for Drupal hooks, and OO code for component-level logic without having to be

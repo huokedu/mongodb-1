@@ -1,0 +1,7 @@
+name: mongodb_storage
+type: module
+description: MongoDB Storage
+core: 8.x
+package: MongoDB
+dependencies:
+  - mongodb

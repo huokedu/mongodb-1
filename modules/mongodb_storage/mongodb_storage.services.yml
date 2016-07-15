@@ -1,0 +1,4 @@
+services:
+  mongodb_storage.query:
+    class: Drupal\mongodb_storage\Model\QueryFactory
+    arguments: ['@entity.manager', '@settings']

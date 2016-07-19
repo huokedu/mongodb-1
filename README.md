@@ -1,9 +1,10 @@
 INTRODUCTION
 ============
 
-MongoDB integration for Drupal, version 8.x-2.0-dev.
+MongoDB integration for Drupal, version 8.x-2.0-dev. - Experimental branch for
+entity/field storage. _Only use for development purposes: it does *not* work_.
 
-[![Build Status](https://travis-ci.org/FGM/mongodb.svg?branch=8.x-2.x)](https://travis-ci.org/FGM/mongodb) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FGM/mongodb/badges/quality-score.png?b=8.x-2.x)](https://scrutinizer-ci.com/g/FGM/mongodb/?branch=8.x-2.x)
+[![Build Status](https://travis-ci.org/FGM/mongodb.svg?branch=storage)](https://travis-ci.org/FGM/mongodb) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FGM/mongodb/badges/quality-score.png?b=storage)](https://scrutinizer-ci.com/g/FGM/mongodb/?branch=storage)
 
 This package is a collection of several modules, allowing Drupal sites to store
 various data in MongoDB. Its __only__ currently working sub-modules are the ones
@@ -121,7 +122,7 @@ discussion, but send pull requests on Github rather than drupal.org patches.
 LEGAL
 =====
 
-Like any Drupal module, this package is licensed under the [General Public 
+Like any Drupal module, this package is licensed under the [General Public
 License, version 2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) or later.
 
 * Drupal is a registered trademark of Dries Buytaert.
